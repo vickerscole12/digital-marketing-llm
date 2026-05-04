@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard App</title>
+    <link rel="stylesheet" href="dashboardstyles.css">
+    <!-- Metropolis font from Google Fonts CDN -->
+    <link href="https://fonts.googleapis.com/css2?family=Metropolis:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body, html, * {
+            font-family: 'Metropolis', Arial, sans-serif !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-root">
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <img src="assets/adlogo2.png" alt="HC Logo" style="width: 160px; height: auto; display: block; margin: 0 auto 24px 0;">
+            </div>
+            <nav>
+                <ul>
+                    <li class="active" onclick="goToDashboard()">Dashboard</li>
+                    <li onclick="goToBuilder()">Campaign Builder</li>
+                    <li onclick="goToQueue()">Campaign Queue</li>
+                    <li>Settings</li>
+                </ul>
+            </nav>
+        </aside>
+        <main class="main-area">
+            <header class="main-header">
+                <div class="header-row">
+                    <h2>Hi, Welcome Back <span class="wave">👋</span></h2>
+                    <div class="timeframe-toggle">
+                        <button class="time-btn">Week</button>
+                        <button class="time-btn time-btn-active">Month</button>
+                        <button class="time-btn">Year</button>
+                    </div>
+                </div>
+            </header>
+            <section class="card-row">
+    <div class="card card-blue">
+        <div class="card-content">
+            <div class="card-value card-value-large">5432.81</div>
+            <div class="card-label card-label-large">Monthly Cost</div>
+            <div class="card-trend">
+                <span class="trend-up">+2.6%</span>
+                <img src="assets/curved-arrow-2263.svg" alt="Up Arrow" class="trend-arrow">
+            </div>
+        </div>
+    </div>
+    <div class="card card-purple">
+        <div class="card-content">
+            <div class="card-value2 card-value-large">756</div>
+            <div class="card-label2 card-label-large">Campaigns Created</div>
+            <div class="card-trend">
+                <span class="trend-down">-3.8%</span>
+                <img src="assets/curved-arrow-2263.svg" alt="Down Arrow" class="trend-arrow" style="transform: rotate(180deg);">
+            </div>
+        </div>
+    </div>
+    <div class="card card-yellow">
+        <div class="card-content">
+            <div class="card-value3 card-value-large">21,532</div>
+            <div class="card-label3 card-label-large">Identified Profiles</div>
+            <div class="card-trend">
+                <span class="trend-up2">+1.4%</span>
+                <img src="assets/curved-arrow-2263.svg" alt="Up Arrow" class="trend-arrow">
+            </div>
+        </div>
+    </div>
+    <div class="card card-red">
+        <div class="card-content">
+            <div class="card-value4 card-value-large">12%</div>
+            <div class="card-label4 card-label-large">Engagement Rate</div>
+            <div class="card-trend">
+                <span class="trend-up3">+0.7%</span>
+                <img src="assets/curved-arrow-2263.svg" alt="Up Arrow" class="trend-arrow">
+            </div>
+        </div>
+    </div>
+</section>
+            <section class="graph-row">
+                <div class="graph-card">
+                    <div class="product-chart-container">
+                        <div class="product-chart-title">Campaigns per Product</div>
+                        <img src="assets/product_chart_cleaned.png" alt="Campaigns per Product Chart" class="product-chart-img" style="width: 400px; max-width: 500px; height: auto;">
+                        <div class="product-chart-xaxis">
+                            <span>Credit<br>Cards</span>
+                            <span>Home<br>Insurance</span>
+                            <span>Online<br>Loans</span>
+                            <span>Re-<br>financing</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="graph-card">
+                    <div class="channel-chart-container">
+                        <div class="channel-chart-title">Campaigns per Channel</div>
+                        <img src="assets/channel_chart_cleaned.png" alt="Campaigns per Channel Chart" class="channel-chart-img" style="width: 400px; max-width: 500px; height: 225px;">
+                        <div class="channel-chart-xaxis">
+                            <span>Email</span>
+                            <span>SMS</span>
+                            <span>Push Notifs</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script>
+        function goToQueue() {
+            window.location.href = "queue.html";
+        }
+        function goToDashboard() {
+            window.location.href = "dashboard.html";
+        }
+        function goToBuilder() {
+            window.location.href = "builder.html";
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campaign Builder</title>
+    <link rel="stylesheet" href="builderstyles.css">
+    <!-- Metropolis font from Google Fonts CDN -->
+    <link href="https://fonts.googleapis.com/css2?family=Metropolis:wght@400;500;600;700&display=swap" rel="stylesheet">
+   
+</head>
+<body>
+    <div class="dashboard-root">
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <img src="assets/adlogo2.png" alt="HC Logo" style="width: 160px; height: auto; display: block; margin: 0 auto 24px 0;">
+            </div>
+            <nav>
+                <ul>
+                    <li onclick="goToDashboard()">Dashboard</li>
+                    <li class="active" onclick="goToBuilder()">Campaign Builder</li>
+                    <li onclick="goToQueue()">Campaign Queue</li>
+                    <li>Settings</li>
+                </ul>
+            </nav>
+        </aside>
+        <main class="main-area builder-main-area">
+            <div class="builder-content">
+                <!-- LEFT COLUMN -->
+                <div class="builder-left">
+                    <!-- Brand Guidelines -->
+                    <div class="builder-box brand-guidelines">
+                        <div class="builder-box-header">Brand Guidelines</div>
+                        <textarea id="brandGuidelines" class="brand-guidelines-textarea" rows="4" placeholder="Enter brand guidelines...">Use a friendly, trustworthy, and clear tone. Stick to the red and white color scheme, clean modern design, and sans-serif fonts. Highlight products like personal loans with simple, empowering language. Use realistic local imagery (Kazakh individuals/families). End messages with clear CTAs like "Apply Now" or "Learn More." Home Credit Bank Kazakhstan JSC. Always make sure to state at the end of the campaign "All loans are subject to approval. Terms and conditions apply."</textarea>
+                    </div>
+                    <!-- Prompt Settings -->
+                    <div class="builder-box builder-dropdown">
+                        <div class="builder-box-header dropdown-header" onclick="toggleDropdown(this)">
+                            Prompt Settings
+                            <span class="dropdown-arrow">&#9650;</span>
+                        </div>
+                        <div class="dropdown-content">
+                            <div class="prompt-setting-row">
+                                <label style="min-width: 150px; display: inline-block;">GenAI Temperature:</label>
+                                <input id="temperature" type="range" min="0" max="1" step="0.01" value="0.50" class="slider">
+                                <span class="slider-value">0.50</span>
+                            </div>
+                            <div class="prompt-setting-row">
+                                <label style="min-width: 150px; display: inline-block;">Top-p Value:</label>
+                                <input id="topP" type="range" min="0" max="1" step="0.01" value="1.00" class="slider">
+                                <span class="slider-value">1.00</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Campaign Settings -->
+                    <div class="builder-box builder-dropdown">
+                        <div class="builder-box-header dropdown-header" onclick="toggleDropdown(this)">
+                            Campaign Settings
+                            <span class="dropdown-arrow">&#9650;</span>
+                        </div>
+                        <div class="dropdown-content">
+                            <div class="campaign-setting-row">
+                                <label>Sample Size:</label>
+                                <input id="sampleSize" type="number" class="mini-input" value="10" min="1" style="width: 90px;">
+                            </div>
+                            <div class="campaign-setting-row">
+                                <label>Channel:</label>
+                                <div class="custom-select-wrapper">
+                                    <div id="channelSelect" class="custom-select" tabindex="0">
+                                        <span class="selected-option">Email</span>
+                                        <span class="custom-select-arrow">&#9660;</span>
+                                        <div class="custom-select-options">
+                                            <div class="custom-select-option">Email</div>
+                                            <div class="custom-select-option">SMS</div>
+                                            <div class="custom-select-option">Push Notifications</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="campaign-setting-row">
+                                <label>Product:</label>
+                                <div class="custom-select-wrapper">
+                                    <div id="productSelect" class="custom-select" tabindex="0">
+                                        <span class="selected-option">Home Insurance</span>
+                                        <span class="custom-select-arrow">&#9660;</span>
+                                        <div class="custom-select-options">
+                                            <div class="custom-select-option">Credit Cards</div>
+                                            <div class="custom-select-option">Home Insurance</div>
+                                            <div class="custom-select-option">Online Loans</div>
+                                            <div class="custom-select-option">Re-financing</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="campaign-setting-row">
+                                <label>Start Date:</label>
+                                <input id="startDate" type="date" class="mini-input" value="2025-06-10" style="width: 150px;">
+                            </div>
+                            <div class="campaign-setting-row">
+                                <label>Max Words:</label>
+                                <input id="maxWords" type="number" class="mini-input" value="100" min="1" style="width: 90px;"> 
+                            </div>
+                            <div class="campaign-setting-row">
+                                <label>Language:</label>
+                                <div class="custom-select-wrapper">
+                                    <div id="languageSelect" class="custom-select" tabindex="0">
+                                        <span class="selected-option">English</span>
+                                        <span class="custom-select-arrow">&#9660;</span>
+                                        <div class="custom-select-options">
+                                            <div class="custom-select-option">English</div>
+                                            <div class="custom-select-option">Kazakh</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="error-message" id="errorMessage"></div>
+                    <button id="createMessagesBtn" class="create-messages-btn" onclick="createMessages()">Create Messages</button>
+                    <!-- Profile Preview -->
+                    <div class="builder-box builder-dropdown">
+                        <div class="builder-box-header dropdown-header" onclick="toggleDropdown(this)">
+                            Profile Preview
+                            <span class="dropdown-arrow">&#9650;</span>
+                        </div>
+                        <div class="dropdown-content">
+                            <div class="profile-preview-table-wrapper">
+                                <table class="profile-preview-table">
+                                    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Account Type</th>
+        <th>Monthly Income (KZT)</th>
+        <th>Credit Score</th>
+        <th>Top Spending Industry</th>
+        <th>High Spender (Y/N)</th>
+    </tr>
+</thead>
+<tbody id="profileTableBody">
+    <tr><td>Aigerim Tursynova</td><td>29</td><td>Savings</td><td>320,000</td><td>740</td><td>Retail</td><td>Y</td></tr>
+    <tr><td>Daniyar Beketov</td><td>35</td><td>Credit</td><td>450,000</td><td>680</td><td>Food & Dining</td><td>N</td></tr>
+    <tr><td>Aliya Zhaksylkykova</td><td>41</td><td>Mortgage</td><td>510,000</td><td>720</td><td>Travel</td><td>Y</td></tr>
+    <tr><td>Yerzhan Amanov</td><td>23</td><td>Savings</td><td>250,000</td><td>660</td><td>Entertainment</td><td>N</td></tr>
+    <tr><td>Kamila Serikkyzy</td><td>30</td><td>Credit</td><td>380,000</td><td>705</td><td>Groceries</td><td>N</td></tr>
+    <tr><td>Nursultan Kaliev</td><td>47</td><td>Mortgage</td><td>600,000</td><td>775</td><td>Travel</td><td>Y</td></tr>
+    <tr><td>Saltanat Mukanova</td><td>39</td><td>Savings</td><td>410,000</td><td>730</td><td>Food & Dining</td><td>Y</td></tr>
+    <tr><td>Miras Nurpeisov</td><td>27</td><td>Credit</td><td>300,000</td><td>655</td><td>Entertainment</td><td>N</td></tr>
+    <tr><td>Zhanel Adilkhan</td><td>31</td><td>Savings</td><td>340,000</td><td>710</td><td>Retail</td><td>N</td></tr>
+    <tr><td>Askar Tulegenov</td><td>52</td><td>Mortgage</td><td>720,000</td><td>790</td><td>Travel</td><td>Y</td></tr>
+</tbody>
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- RIGHT COLUMN -->
+                <div class="builder-right">
+                    <div class="builder-box sample-output">
+                        <div class="sample-output-title" id="outputTitle">Message Preview</div>
+                        <div class="sample-output-subtitle" id="outputSubject">Subject: Secure Your Home with Flexible Payment Options</div>
+                        <div class="sample-output-body" id="outputBody">
+                            Dear Aliya,<br><br>
+                            Life is unpredictable — your home protection shouldn't be.<br><br>
+                            With our Home Insurance Loan, you can enjoy full coverage against fire, theft, natural disasters, and more — without paying everything upfront. Spread your premiums into easy monthly payments, all backed by the bank you already trust.<br><br>
+                            Secure peace of mind today and pay at your pace.<br><br>
+                            Regards,<br>
+                            Your Home Credit Team
+                        </div>
+                    </div>
+                    <div class="messages-created-metric">
+                        <span id="messagesCount"><b><i>0 Messages Created</i></b></span>
+                    </div>
+                    <button class="add-to-queue-btn" onclick="addToQueue()">Add to Queue</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Global variables to store current settings and campaign data
+        let currentSettings = {};
+        let currentCampaignData = {};
+        
+        // Function to save generated content to localStorage
+        function saveGeneratedContent(campaignTitle, subject, body, messageCount, subjectLines) {
+            const contentData = {
+                campaignTitle: campaignTitle,
+                subject: subject,
+                body: body,
+                messageCount: messageCount,
+                subjectLines: subjectLines || [],
+                timestamp: Date.now()
+            };
+            localStorage.setItem('generatedCampaign', JSON.stringify(contentData));
+            currentCampaignData = contentData;
+        }
+        
+        // Function to save campaign to queue
+        function saveCampaignToQueue(campaignTitle, recipients, startDate, subjectLines) {
+            // Get existing campaigns from localStorage
+            let campaigns = JSON.parse(localStorage.getItem('campaignQueue')) || [];
+            
+            // Create new campaign object
+            const newCampaign = {
+                id: Date.now(), // unique ID based on timestamp
+                title: campaignTitle,
+                status: 'Scheduled',
+                recipients: recipients,
+                opened: '---',
+                startDate: startDate,
+                subjectLines: subjectLines || [],
+                createdAt: new Date().toISOString()
+            };
+            
+            // Add new campaign to the beginning of the array (top of table)
+            campaigns.unshift(newCampaign);
+            
+            // Save back to localStorage
+            localStorage.setItem('campaignQueue', JSON.stringify(campaigns));
+        }
+        
+        // Function to add current campaign to queue when button is clicked
+        function addToQueue() {
+            // Check if there's a generated campaign to add
+            const savedData = localStorage.getItem('generatedCampaign');
+            if (!savedData) {
+                alert('Please create a campaign first before adding to queue.');
+                return;
+            }
+            
+            const contentData = JSON.parse(savedData);
+            const currentSettings = collectFormData();
+            
+            // Save to campaign queue using the campaign title (not subject)
+            saveCampaignToQueue(
+                contentData.campaignTitle,
+                currentSettings.sampleSize,
+                currentSettings.startDate,
+                contentData.subjectLines
+            );
+            
+            // Show success message
+            alert(`Campaign "${contentData.campaignTitle}" has been added to the queue!`);
+        }
+        
+        // Function to load saved content from localStorage
+        function loadSavedContent() {
+            const savedData = localStorage.getItem('generatedCampaign');
+            if (savedData) {
+                const contentData = JSON.parse(savedData);
+              
+                document.getElementById('outputSubject').textContent = contentData.subject ? `Subject: ${contentData.subject}` : "";
+                document.getElementById('outputBody').innerHTML = contentData.body;
+                document.getElementById('messagesCount').innerHTML = `<b><i>${contentData.messageCount}</i></b>`;
+            }
+        }
+        
+        function toggleDropdown(header) {
+            const box = header.parentElement;
+            const content = box.querySelector('.dropdown-content');
+            const arrow = header.querySelector('.dropdown-arrow');
+            if (content.style.display === "none" || !content.style.display) {
+                content.style.display = "block";
+                arrow.innerHTML = "&#9650;";
+            } else {
+                content.style.display = "none";
+                arrow.innerHTML = "&#9660;";
+            }
+        }
+
+        // Navigation functions
+        function goToQueue() {
+            window.location.href = "queue.html";
+        }
+        function goToDashboard() {
+            window.location.href = "dashboard.html";
+        }
+        function goToBuilder() {
+            window.location.href = "builder.html";
+        }
+        
+        function collectFormData() {
+            return {
+                brandGuidelines: document.getElementById('brandGuidelines').value,
+                temperature: parseFloat(document.getElementById('temperature').value),
+                topP: parseFloat(document.getElementById('topP').value),
+                sampleSize: parseInt(document.getElementById('sampleSize').value),
+                channel: document.querySelector('#channelSelect .selected-option').textContent,
+                product: document.querySelector('#productSelect .selected-option').textContent,
+                startDate: document.getElementById('startDate').value,
+                maxWords: parseInt(document.getElementById('maxWords').value),
+                language: document.querySelector('#languageSelect .selected-option').textContent
+            };
+        }
+
+        // Function to get all profile data
+        function getAllProfileData() {
+            const profileRows = document.querySelectorAll('#profileTableBody tr');
+            const profiles = [];
+            
+            profileRows.forEach(row => {
+                profiles.push({
+                    name: row.cells[0].textContent,
+                    age: row.cells[1].textContent,
+                    accountType: row.cells[2].textContent,
+                    monthlyIncome: row.cells[3].textContent,
+                    creditScore: row.cells[4].textContent,
+                    topSpendingIndustry: row.cells[5].textContent,
+                    highSpender: row.cells[6].textContent
+                });
+            });
+            
+            return profiles;
+        }
+
+        // Function to create the AI prompt
+        function createPrompt(settings) {
+            const profiles = getAllProfileData();
+            const firstProfile = profiles[0]; // For the demo email body
+            
+            let profilesText = profiles.map((profile, index) => 
+                `Profile ${index + 1}: ${profile.name}, Age: ${profile.age}, Income: ${profile.monthlyIncome} KZT`
+            ).join('\n');
+
+            return `You are a professional marketing copywriter for International Bank ABC. Create a personalized ${settings.channel.toLowerCase()} campaign for ${settings.product}.
+
+BRAND GUIDELINES:
+${settings.brandGuidelines}
+
+CAMPAIGN REQUIREMENTS:
+- Channel: ${settings.channel}
+- Product: ${settings.product}
+- Language: ${settings.language}
+- Maximum words for body: ${settings.maxWords}
+
+CUSTOMER PROFILES:
+${profilesText}
+
+INSTRUCTIONS:
+1. Create ONE CAMPAIGN TITLE that does NOT include any customer names or personal information, just a general summary. No special characters in the title.
+2. Create 10 DIFFERENT subject lines, 1 for each customer in the profile preview - variations on the same theme for ${settings.product}. These should be engaging and varied but related to the same campaign theme. Do not include profile information in the subject lines.
+3. Write ONE personalized email body for the first customer profile (${firstProfile.name}) - this will serve as the demo email. Include personalization based on their profile data (age, income, spending habits, etc.). Make it friendly, clear, and aligned with the brand guidelines. Be persuasive but not pushy.
+4. Follow all brand guidelines strictly
+
+Format your response EXACTLY as:
+CAMPAIGN_TITLE: [Your campaign title here]
+SUBJECT_1: [First subject line]
+SUBJECT_2: [Second subject line]
+SUBJECT_3: [Third subject line]
+SUBJECT_4: [Fourth subject line]
+SUBJECT_5: [Fifth subject line]
+SUBJECT_6: [Sixth subject line]
+SUBJECT_7: [Seventh subject line]
+SUBJECT_8: [Eighth subject line]
+SUBJECT_9: [Ninth subject line]
+SUBJECT_10: [Tenth subject line]
+BODY: [Your email body for ${firstProfile.name}]
+
+Generate the campaign now:`;
+        }
+
+        // Function to call Ollama API
+        async function callOllama(prompt, settings) {
+            const response = await fetch('http://localhost:11434/api/generate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    model: 'mistral',
+                    prompt: prompt,
+                    stream: false,
+                    options: {
+                        temperature: settings.temperature,
+                        top_p: settings.topP,
+                        max_tokens: settings.maxWords * 5 // Give buffer for all components
+                    }
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            return data.response;
+        }
+
+        // Function to parse AI response
+        function parseAIResponse(response) {
+            const campaignTitleMatch = response.match(/CAMPAIGN_TITLE:\s*(.+)/i);
+            let campaignTitle = campaignTitleMatch ? campaignTitleMatch[1].trim() : "Generated Campaign";
+            
+            // Extract all subject lines
+            const subjectLines = [];
+            for (let i = 1; i <= 10; i++) {
+                const subjectMatch = response.match(new RegExp(`SUBJECT_${i}:\\s*(.+)`, 'i'));
+                if (subjectMatch) {
+                    subjectLines.push(subjectMatch[1].trim());
+                }
+            }
+            
+            const bodyMatch = response.match(/BODY:\s*([\s\S]+)/i);
+            let body = bodyMatch ? bodyMatch[1].trim() : response;
+            
+            // Clean up the body text to remove any leftover headers
+            body = body.replace(/CAMPAIGN_TITLE:.*\n?/gi, '')
+                      .replace(/SUBJECT_\d+:.*\n?/gi, '')
+                      .replace(/BODY:.*\n?/i, '')
+                      .trim();
+            
+            return { 
+                campaignTitle, 
+                subject: subjectLines[0] || "Email Campaign", // First subject as main subject
+                body, 
+                subjectLines 
+            };
+        }
+
+        // Main function to create messages
+        async function createMessages() {
+            const btn = document.getElementById('createMessagesBtn');
+            const errorDiv = document.getElementById('errorMessage');
+            
+            // Hide any previous errors
+            errorDiv.style.display = 'none';
+            
+            // Set loading state
+            btn.classList.add('loading');
+            btn.textContent = '';
+            btn.disabled = true;
+
+            try {
+                // Collect form data
+                const settings = collectFormData();
+                currentSettings = settings;
+                
+                // Create prompt
+                const prompt = createPrompt(settings);
+                
+                // Call Ollama
+                const aiResponse = await callOllama(prompt, settings);
+                
+                // Parse response
+                const parsedResponse = parseAIResponse(aiResponse);
+                
+                // Update the output display
+               
+                document.getElementById('outputSubject').textContent = `Subject: ${parsedResponse.subject}`;
+                document.getElementById('outputBody').innerHTML = parsedResponse.body.replace(/\n/g, '<br>');
+                
+                // Update message count
+                const messageCountText = `${settings.sampleSize} Messages Created`;
+                document.getElementById('messagesCount').innerHTML = `<b><i>${messageCountText}</i></b>`;
+                
+                // Save the generated content to localStorage
+                saveGeneratedContent(
+                    parsedResponse.campaignTitle,
+                    parsedResponse.subject,
+                    parsedResponse.body.replace(/\n/g, '<br>'), 
+                    messageCountText,
+                    parsedResponse.subjectLines
+                );
+                
+            } catch (error) {
+                console.error('Error creating messages:', error);
+                
+                // Show error message
+                errorDiv.textContent = `Error: ${error.message}. Please make sure Ollama is running (try 'ollama serve' in terminal).`;
+                errorDiv.style.display = 'block';
+                
+            } finally {
+                // Reset button state
+                btn.classList.remove('loading');
+                btn.textContent = 'Create Messages';
+                btn.disabled = false;
+            }
+        }
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load any previously saved content first
+            loadSavedContent();
+            
+            // Slider value update logic
+            document.querySelectorAll('.slider').forEach(function(slider) {
+                const valueSpan = slider.nextElementSibling;
+                slider.addEventListener('input', function() {
+                    valueSpan.textContent = Number(slider.value).toFixed(2);
+                });
+            });
+
+            // Custom select for Channel, Product, and Language
+            document.querySelectorAll('.custom-select').forEach(function(select) {
+                const selected = select.querySelector('.selected-option');
+                const options = select.querySelector('.custom-select-options');
+                const arrow = select.querySelector('.custom-select-arrow');
+                
+                select.addEventListener('click', function(e) {
+                    options.classList.toggle('show');
+                    arrow.innerHTML = options.classList.contains('show') ? '&#9650;' : '&#9660;';
+                });
+                
+                select.addEventListener('blur', function() {
+                    setTimeout(() => {
+                        options.classList.remove('show');
+                        arrow.innerHTML = '&#9660;';
+                    }, 150);
+                });
+                
+                options.querySelectorAll('.custom-select-option').forEach(function(option) {
+                    option.addEventListener('click', function(e) {
+                        selected.textContent = this.textContent;
+                        options.classList.remove('show');
+                        arrow.innerHTML = '&#9660;';
+                        e.stopPropagation();
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

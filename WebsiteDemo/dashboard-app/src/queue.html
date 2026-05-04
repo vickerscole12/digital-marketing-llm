@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard App</title>
+    <link rel="stylesheet" href="queuestyles.css">
+    <style>
+       
+    </style>
+</head>
+<body>
+    <div class="dashboard-root">
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <img src="assets/adlogo2.png" alt="HC Logo" style="width: 160px; height: auto; display: block; margin: 0 auto 24px 0;">
+            </div>
+            <nav>
+                <ul>
+                    <li onclick="goToDashboard()">Dashboard</li>
+                    <li onclick="goToBuilder()">Campaign Builder</li>
+                    <li class="active" onclick="goToQueue()">Campaign Queue</li>
+                    <li>Settings</li>
+                </ul>
+            </nav>
+        </aside>
+        <main class="main-area">
+           
+      <!-- Campaign Queue Table Start -->
+            <section class="campaign-queue-section">
+                <div class="campaign-queue-header">
+                    <div class="campaign-queue-tabs">
+                        <button class="tab active">All</button>
+                        <button class="tab">Active</button>
+                        <button class="tab">Draft</button>
+                        <button class="tab">Archived</button>
+                    </div>
+                    <button class="export-btn">Export</button>
+                </div>
+                <h2 class="campaign-queue-title">Recent Campaigns</h2>
+                <div class="campaign-queue-table-wrapper">
+                    <table class="campaign-queue-table">
+                        <thead>
+                            <tr>
+                                <th>Campaign Title</th>
+                                <th>Status</th>
+                                <th>Recipients</th>
+                                <th>Opened</th>
+                                <th>Start Date</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="campaignTableBody">
+                            <!-- Dynamic campaigns will be inserted here -->
+                            <!-- Original static campaigns as fallback -->
+                            <tr data-campaign-id="static-1">
+                                <td><strong>Boost Your Credit</strong></td>
+                                <td class="status-cell">
+                                    <span class="status">
+                                        <span class="status-label">Scheduled</span>
+                                        <span class="status-icon">
+                                            <span class="dot yellow"></span>
+                                        </span>
+                                    </span>
+                                </td>
+                                <td>2,892</td>
+                                <td>&nbsp; --- </td>
+                                <td>6/23/2025</td>
+                                <td class="actions-cell">
+                                    <button class="actions-menu-trigger" onclick="toggleActionsMenu(this)">⋯</button>
+                                    <div class="actions-dropdown">
+                                        <div class="dropdown-item edit" onclick="editCampaign(this)">Edit</div>
+                                        <div class="dropdown-item delete" onclick="deleteCampaign(this)">Delete Campaign</div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr data-campaign-id="static-2">
+                                <td><strong>Smart Home Insurance</strong></td>
+                                <td class="status-cell">
+                                    <span class="status">
+                                        <span class="status-label">Stopped</span>
+                                        <span class="status-icon">
+                                            <span class="icon-x">&#10006;</span>
+                                        </span>
+                                    </span>
+                                </td>
+                                <td>5,100</td>
+                                <td>4,200</td>
+                                <td>6/03/2025</td>
+                                <td class="actions-cell">
+                                    <button class="actions-menu-trigger" onclick="toggleActionsMenu(this)">⋯</button>
+                                    <div class="actions-dropdown">
+                                        <div class="dropdown-item edit" onclick="editCampaign(this)">Edit</div>
+                                        <div class="dropdown-item delete" onclick="deleteCampaign(this)">Delete Campaign</div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr data-campaign-id="static-3">
+                                <td><strong>Instant Online Loans</strong></td>
+                                <td class="status-cell">
+                                    <span class="status">
+                                        <span class="status-label">Completed</span>
+                                        <span class="status-icon">
+                                            <span class="icon-check">&#10004;</span>
+                                        </span>
+                                    </span>
+                                </td>
+                                <td>2,800</td>
+                                <td>2,100</td>
+                                <td>11/29/2024</td>
+                                <td class="actions-cell">
+                                    <button class="actions-menu-trigger" onclick="toggleActionsMenu(this)">⋯</button>
+                                    <div class="actions-dropdown">
+                                        <div class="dropdown-item edit" onclick="editCampaign(this)">Edit</div>
+                                        <div class="dropdown-item delete" onclick="deleteCampaign(this)">Delete Campaign</div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr data-campaign-id="static-4">
+                                <td><strong>Mobile Banking Made Easy</strong></td>
+                                <td class="status-cell">
+                                    <span class="status">
+                                        <span class="status-label">Scheduled</span>
+                                        <span class="status-icon">
+                                            <span class="dot yellow"></span>
+                                        </span>
+                                    </span>
+                                </td>
+                                <td>3,704</td>
+                                <td>&nbsp; --- </td>
+                                <td>9/08/2025</td>
+                                <td class="actions-cell">
+                                    <button class="actions-menu-trigger" onclick="toggleActionsMenu(this)">⋯</button>
+                                    <div class="actions-dropdown">
+                                        <div class="dropdown-item edit" onclick="editCampaign(this)">Edit</div>
+                                        <div class="dropdown-item delete" onclick="deleteCampaign(this)">Delete Campaign</div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr data-campaign-id="static-5">
+                                <td><strong>Secure Your Future</strong></td>
+                                <td class="status-cell">
+                                    <span class="status">
+                                        <span class="status-label">Active</span>
+                                        <span class="status-icon">
+                                            <span class="dot blue"></span>
+                                        </span>
+                                    </span>
+                                </td>
+                                <td>4,500</td>
+                                <td>3,900</td>
+                                <td>4/21/2025</td>
+                                <td class="actions-cell">
+                                    <button class="actions-menu-trigger" onclick="toggleActionsMenu(this)">⋯</button>
+                                    <div class="actions-dropdown">
+                                        <div class="dropdown-item edit" onclick="editCampaign(this)">Edit</div>
+                                        <div class="dropdown-item delete" onclick="deleteCampaign(this)">Delete Campaign</div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr data-campaign-id="static-6">
+                                <td><strong>Banking Simplified</strong></td>
+                                <td class="status-cell">
+                                    <span class="status">
+                                        <span class="status-label">Scheduled</span>
+                                        <span class="status-icon">
+                                            <span class="dot yellow"></span>
+                                        </span>
+                                    </span>
+                                </td>
+                                <td>4,909</td>
+                                <td>&nbsp; --- </td>
+                                <td>10/04/2025</td>
+                                <td class="actions-cell">
+                                    <button class="actions-menu-trigger" onclick="toggleActionsMenu(this)">⋯</button>
+                                    <div class="actions-dropdown">
+                                        <div class="dropdown-item edit" onclick="editCampaign(this)">Edit</div>
+                                        <div class="dropdown-item delete" onclick="deleteCampaign(this)">Delete</div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            <!-- Campaign Queue Table End -->
+            
+            <!-- Email Modal -->
+            <div class="modal-overlay" id="emailModal">
+                <div class="email-modal">
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="modalTitle">Edit Email</h3>
+                        <button class="modal-close" onclick="closeEmailModal()">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="email-subject-display" id="modalSubject">
+                            Subject Line
+                        </div>
+                        <div class="email-body-editor">
+                            <label class="email-body-label">Email Body</label>
+                            <textarea class="email-body-textarea" id="emailBodyEditor" placeholder="Enter email content..."></textarea>
+                        </div>
+                        <div class="modal-actions">
+                            <button class="modal-btn modal-btn-secondary" onclick="closeEmailModal()">Cancel</button>
+                            <button class="modal-btn modal-btn-primary" onclick="saveEmail()">Save Changes</button>
+                            <button class="modal-btn modal-btn-success" onclick="sendEmail()">Send Email</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script>
+        // Function to format date for display
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            const year = date.getFullYear();
+            return `${month}/${day}/${year}`;
+        }
+        
+        // Function to format numbers with commas
+        function formatNumber(num) {
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        }
+        
+        // Function to create actions dropdown HTML
+        function createActionsDropdown(hasSubjectLines = false) {
+            const viewCampaignOption = hasSubjectLines 
+                ? '<div class="dropdown-item view" onclick="viewCampaign(this)">View Campaign</div>' 
+                : '';
+            
+            return `
+                <td class="actions-cell">
+                    <button class="actions-menu-trigger" onclick="toggleActionsMenu(this)">⋯</button>
+                    <div class="actions-dropdown">
+                        ${viewCampaignOption}
+                        <div class="dropdown-item edit" onclick="editCampaign(this)">Edit</div>
+                        <div class="dropdown-item send" onclick="sendCampaign(this)">Send Campaign</div>
+                        <div class="dropdown-item delete" onclick="deleteCampaign(this)">Delete Campaign</div>
+                    </div>
+                </td>
+            `;
+        }
+        
+        // Function to create campaign details section
+        function createCampaignDetails(campaign) {
+            if (!campaign.subjectLines || campaign.subjectLines.length === 0) {
+                return '';
+            }
+            
+            let subjectLinesHTML = '';
+            campaign.subjectLines.forEach((subject, index) => {
+                const isClickable = index === 0 ? 'clickable' : '';
+                const onclick = index === 0 ? `onclick="toggleEmailBody('${campaign.id}', ${index})"` : '';
+                subjectLinesHTML += `
+                    <div class="subject-line-item ${isClickable}" ${onclick}>
+                        ${subject}
+                    </div>
+                `;
+            });
+            
+            // Get saved campaign data for email body
+            const savedData = localStorage.getItem('generatedCampaign');
+            let emailBody = '';
+            if (savedData) {
+                const contentData = JSON.parse(savedData);
+                emailBody = contentData.body || 'Email body not available.';
+            }
+            
+            return `
+                <tr class="campaign-details-row" id="details-${campaign.id}">
+                    <td colspan="6">
+                        <div class="campaign-details" id="campaign-details-${campaign.id}">
+                            <div class="subject-lines-section">
+                                <div class="subject-lines-title">Subject Lines (${campaign.subjectLines.length})</div>
+                                ${subjectLinesHTML}
+                                <div class="email-body" id="email-body-${campaign.id}-0">
+                                    <div class="email-body-header">Email Body Preview</div>
+                                    <div class="email-body-content">${emailBody}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            `;
+        }
+        
+        // Function to view campaign details
+        function viewCampaign(element) {
+            const row = element.closest('tr');
+            const campaignId = row.getAttribute('data-campaign-id');
+            const detailsRow = document.getElementById(`details-${campaignId}`);
+            const campaignDetails = document.getElementById(`campaign-details-${campaignId}`);
+            
+            // Close the dropdown
+            const dropdown = element.closest('.actions-dropdown');
+            dropdown.classList.remove('show');
+            
+            // Toggle campaign details visibility
+            if (detailsRow) {
+                if (campaignDetails.classList.contains('show')) {
+                    campaignDetails.classList.remove('show');
+                    row.classList.remove('campaign-expanded');
+                } else {
+                    // Close all other open campaign details
+                    document.querySelectorAll('.campaign-details.show').forEach(details => {
+                        details.classList.remove('show');
+                        details.closest('tr').previousElementSibling.classList.remove('campaign-expanded');
+                    });
+                    
+                    campaignDetails.classList.add('show');
+                    row.classList.add('campaign-expanded');
+                }
+            }
+        }
+        
+        // Function to toggle email body visibility (now opens modal)
+        function toggleEmailBody(campaignId, subjectIndex) {
+            const campaigns = JSON.parse(localStorage.getItem('campaignQueue')) || [];
+            const campaign = campaigns.find(c => c.id.toString() === campaignId.toString());
+            
+            if (campaign && campaign.subjectLines && campaign.subjectLines[subjectIndex]) {
+                const subject = campaign.subjectLines[subjectIndex];
+                const emailBody = getEmailBodyForCampaign(campaign);
+                
+                openEmailModal(campaign.title, subject, emailBody);
+            }
+        }
+        
+        // Function to open email modal
+        function openEmailModal(campaignTitle, subject, emailBody) {
+            const modal = document.getElementById('emailModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalSubject = document.getElementById('modalSubject');
+            const emailBodyEditor = document.getElementById('emailBodyEditor');
+            
+            modalTitle.textContent = `Edit Email - ${campaignTitle}`;
+            modalSubject.textContent = subject;
+            emailBodyEditor.value = emailBody.replace(/<br>/g, '\n').replace(/<[^>]*>/g, '');
+            
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
+        
+        // Function to close email modal
+        function closeEmailModal() {
+            const modal = document.getElementById('emailModal');
+            modal.classList.remove('show');
+            document.body.style.overflow = 'auto'; // Restore scrolling
+        }
+        
+        // Function to save email (now actually saves to localStorage)
+        function saveEmail() {
+            const modalTitle = document.getElementById('modalTitle');
+            const emailBodyEditor = document.getElementById('emailBodyEditor');
+            const emailBody = emailBodyEditor.value;
+            
+            // Extract campaign title from modal title
+            const campaignTitle = modalTitle.textContent.replace('Edit Email - ', '');
+            
+            // Get existing campaigns from localStorage
+            let campaigns = JSON.parse(localStorage.getItem('campaignQueue')) || [];
+            
+            // Find and update the campaign with the edited email body
+            const campaignIndex = campaigns.findIndex(campaign => campaign.title === campaignTitle);
+            if (campaignIndex !== -1) {
+                // Store the edited email body in the campaign
+                campaigns[campaignIndex].editedEmailBody = emailBody.replace(/\n/g, '<br>');
+                localStorage.setItem('campaignQueue', JSON.stringify(campaigns));
+            }
+            
+            // Also update the generatedCampaign if it matches
+            const savedData = localStorage.getItem('generatedCampaign');
+            if (savedData) {
+                const contentData = JSON.parse(savedData);
+                if (contentData.campaignTitle === campaignTitle) {
+                    contentData.editedEmailBody = emailBody.replace(/\n/g, '<br>');
+                    localStorage.setItem('generatedCampaign', JSON.stringify(contentData));
+                }
+            }
+            
+            alert('Email changes saved successfully!');
+            console.log('Email body saved:', emailBody);
+        }
+        
+        // Function to send email (static for demo)
+        function sendEmail() {
+            const modalTitle = document.getElementById('modalTitle');
+            const campaignName = modalTitle.textContent.replace('Edit Email - ', '');
+            
+            // In a real application, this would send the email
+            alert(`Email sent successfully for campaign: ${campaignName}`);
+            closeEmailModal();
+        }
+        
+        // Function to send campaign (static for demo)
+        function sendCampaign(element) {
+            const row = element.closest('tr');
+            const campaignTitle = row.querySelector('td:first-child strong').textContent;
+            
+            // Close the dropdown
+            const dropdown = element.closest('.actions-dropdown');
+            dropdown.classList.remove('show');
+            
+            // Static message for demo
+            if (confirm(`Are you sure you want to send the campaign "${campaignTitle}" to all recipients?`)) {
+                alert(`Campaign "${campaignTitle}" has been sent successfully!`);
+            }
+        }
+        
+        // Function to load campaigns from localStorage and add them to the table
+        function loadCampaignsFromStorage() {
+            const campaigns = JSON.parse(localStorage.getItem('campaignQueue')) || [];
+            const tableBody = document.getElementById('campaignTableBody');
+            
+            // Create rows for each campaign and insert them at the top
+            campaigns.forEach(campaign => {
+                const row = document.createElement('tr');
+                row.setAttribute('data-campaign-id', campaign.id);
+                
+                const hasSubjectLines = campaign.subjectLines && campaign.subjectLines.length > 0;
+                
+                row.innerHTML = `
+                    <td><strong>${campaign.title}</strong></td>
+                    <td class="status-cell">
+                        <span class="status">
+                            <span class="status-label">${campaign.status}</span>
+                            <span class="status-icon">
+                                <span class="dot yellow"></span>
+                            </span>
+                        </span>
+                    </td>
+                    <td>${formatNumber(campaign.recipients)}</td>
+                    <td>&nbsp; ${campaign.opened} </td>
+                    <td>${formatDate(campaign.startDate)}</td>
+                    ${createActionsDropdown(hasSubjectLines)}
+                `;
+                
+                // Insert at the beginning of the table body (before existing rows)
+                tableBody.insertBefore(row, tableBody.firstChild);
+                
+                // Add campaign details row if subject lines exist
+                if (hasSubjectLines) {
+                    const detailsRow = document.createElement('tr');
+                    detailsRow.className = 'campaign-details-row';
+                    detailsRow.id = `details-${campaign.id}`;
+                    detailsRow.innerHTML = `
+                        <td colspan="6">
+                            <div class="campaign-details" id="campaign-details-${campaign.id}">
+                                <div class="subject-lines-section">
+                                    <div class="subject-lines-title">Subject Lines (${campaign.subjectLines.length})</div>
+                                    ${campaign.subjectLines.map((subject, index) => `
+                                        <div class="subject-line-item ${index === 0 ? 'clickable' : ''}" ${index === 0 ? `onclick="toggleEmailBody('${campaign.id}', ${index})"` : ''}>
+                                            ${subject}
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        </td>
+                    `;
+                    
+                    // Insert details row right after the campaign row
+                    row.parentNode.insertBefore(detailsRow, row.nextSibling);
+                }
+            });
+        }
+        
+        // Function to get email body for a campaign (now checks for edited version first)
+        function getEmailBodyForCampaign(campaign) {
+            // First check if there's an edited version saved
+            if (campaign.editedEmailBody) {
+                return campaign.editedEmailBody;
+            }
+            
+            // Fall back to the original generated body
+            const savedData = localStorage.getItem('generatedCampaign');
+            if (savedData) {
+                const contentData = JSON.parse(savedData);
+                if (contentData.campaignTitle === campaign.title) {
+                    return contentData.editedEmailBody || contentData.body || 'Email body not available.';
+                }
+            }
+            return 'Email body not available for this campaign.';
+        }
+        
+        // Function to toggle actions dropdown menu
+        function toggleActionsMenu(trigger) {
+            const dropdown = trigger.nextElementSibling;
+            
+            // Close all other dropdowns first
+            document.querySelectorAll('.actions-dropdown.show').forEach(openDropdown => {
+                if (openDropdown !== dropdown) {
+                    openDropdown.classList.remove('show');
+                }
+            });
+            
+            // Toggle current dropdown
+            dropdown.classList.toggle('show');
+            
+            // Close dropdown when clicking outside
+            if (dropdown.classList.contains('show')) {
+                setTimeout(() => {
+                    document.addEventListener('click', function closeDropdown(e) {
+                        if (!trigger.contains(e.target) && !dropdown.contains(e.target)) {
+                            dropdown.classList.remove('show');
+                            document.removeEventListener('click', closeDropdown);
+                        }
+                    });
+                }, 100);
+            }
+        }
+        
+        // Function to delete campaign
+        function deleteCampaign(element) {
+            const row = element.closest('tr');
+            const campaignTitle = row.querySelector('td:first-child strong').textContent;
+            const campaignId = row.getAttribute('data-campaign-id');
+            
+            // Confirm deletion
+            if (confirm(`Are you sure you want to delete the campaign "${campaignTitle}"?`)) {
+                // Remove from localStorage if it exists there
+                let campaigns = JSON.parse(localStorage.getItem('campaignQueue')) || [];
+                campaigns = campaigns.filter(campaign => campaign.title !== campaignTitle);
+                localStorage.setItem('campaignQueue', JSON.stringify(campaigns));
+                
+                // Remove the campaign details row if it exists
+                const detailsRow = document.getElementById(`details-${campaignId}`);
+                if (detailsRow) {
+                    detailsRow.remove();
+                }
+                
+                // Remove the row from the table
+                row.remove();
+                
+                // Show success message
+                console.log(`Campaign "${campaignTitle}" has been deleted.`);
+            }
+        }
+        
+        // Function to edit campaign (static for now)
+        function editCampaign(element) {
+            const row = element.closest('tr');
+            const campaignTitle = row.querySelector('td:first-child strong').textContent;
+            
+            // Close the dropdown
+            const dropdown = element.closest('.actions-dropdown');
+            dropdown.classList.remove('show');
+            
+            // Static message for now
+            alert(`Edit functionality for "${campaignTitle}" will be implemented soon.`);
+        }
+        
+        // Navigation functions
+        function goToQueue() {
+            window.location.href = "queue.html";
+        }
+        function goToDashboard() {
+            window.location.href = "dashboard.html";
+        }
+        function goToBuilder() {
+            window.location.href = "builder.html";
+        }
+        
+        // Close modal when clicking outside
+        document.addEventListener('DOMContentLoaded', function() {
+            loadCampaignsFromStorage();
+            
+            // Close modal when clicking outside
+            const modal = document.getElementById('emailModal');
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    closeEmailModal();
+                }
+            });
+            
+            // Close modal with Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeEmailModal();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
